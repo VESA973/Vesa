@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>V-ESA — Réparation électronique &amp; Assistance administrative</title>
+    <meta
+      name="description"
+      content="V-ESA accompagne particuliers et professionnels avec des services de réparation électronique, d'assistance administrative et de télésecrétariat."
+    />
+    <meta
+      name="keywords"
+      content="V-ESA, réparation électronique, réparation console de jeux, réparation instrument électronique, aide administrative, télésecrétariat"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #0b2545;
+        --secondary: #ff7f11;
+        --light: #f5f7fb;
+        --dark: #0d1b2a;
+        --text: #1b263b;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: 'Poppins', Arial, sans-serif;
+        color: var(--text);
+        background-color: var(--light);
+        line-height: 1.6;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background-color: rgba(11, 37, 69, 0.95);
+        backdrop-filter: blur(6px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .container {
+        width: min(1100px, 92vw);
+        margin: 0 auto;
+      }
+
+      .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 0;
+        color: #fff;
+      }
+
+      .brand {
+        font-weight: 700;
+        font-size: 1.25rem;
+        letter-spacing: 0.05em;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 1.25rem;
+        margin: 0;
+        padding: 0;
+      }
+
+      nav li {
+        font-weight: 500;
+      }
+
+      nav a {
+        color: #fff;
+        transition: color 0.2s ease;
+      }
+
+      nav a:hover,
+      nav a:focus {
+        color: var(--secondary);
+      }
+
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 6px;
+        cursor: pointer;
+      }
+
+      .menu-toggle span {
+        display: block;
+        width: 26px;
+        height: 3px;
+        background-color: #fff;
+        border-radius: 2px;
+      }
+
+      main {
+        display: block;
+      }
+
+      section {
+        padding: clamp(4rem, 10vw, 6rem) 0;
+      }
+
+      .hero {
+        background: linear-gradient(135deg, rgba(11, 37, 69, 0.94), rgba(13, 27, 42, 0.85)),
+          url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=80') center/cover;
+        color: #fff;
+        text-align: center;
+        padding: clamp(5rem, 12vw, 8rem) 0;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.25rem, 5vw, 3.5rem);
+        margin-bottom: 1rem;
+      }
+
+      .hero p {
+        font-size: clamp(1.05rem, 3vw, 1.35rem);
+        margin-bottom: 2rem;
+        max-width: 720px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .cta-group {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.85rem 1.75rem;
+        border-radius: 999px;
+        font-weight: 600;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        border: none;
+        cursor: pointer;
+      }
+
+      .btn-primary {
+        background-color: var(--secondary);
+        color: #fff;
+        box-shadow: 0 10px 25px rgba(255, 127, 17, 0.35);
+      }
+
+      .btn-outline {
+        background-color: transparent;
+        color: #fff;
+        border: 2px solid #fff;
+      }
+
+      .btn:hover,
+      .btn:focus {
+        transform: translateY(-2px);
+      }
+
+      h2 {
+        font-size: clamp(2rem, 4vw, 2.75rem);
+        color: var(--primary);
+        text-align: center;
+        margin-bottom: 0.5rem;
+      }
+
+      .section-subtitle {
+        text-align: center;
+        margin: 0 auto 3rem auto;
+        max-width: 640px;
+        color: #556080;
+      }
+
+      .cards-grid {
+        display: grid;
+        gap: 1.75rem;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      }
+
+      .card {
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 18px;
+        box-shadow: 0 12px 35px rgba(13, 27, 42, 0.08);
+        border: 1px solid rgba(11, 37, 69, 0.05);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .card:hover,
+      .card:focus-within {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 45px rgba(13, 27, 42, 0.12);
+      }
+
+      .card h3 {
+        margin-top: 0;
+        color: var(--primary);
+      }
+
+      .icon-circle {
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        background: rgba(255, 127, 17, 0.12);
+        display: grid;
+        place-items: center;
+        color: var(--secondary);
+        font-size: 1.35rem;
+        margin-bottom: 1rem;
+      }
+
+      .values-list {
+        display: grid;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .values-list li {
+        list-style: none;
+        padding-left: 0;
+        display: flex;
+        gap: 0.75rem;
+        align-items: flex-start;
+      }
+
+      .values-list span {
+        color: var(--secondary);
+        font-weight: 600;
+      }
+
+      .split-layout {
+        display: grid;
+        gap: 2rem;
+        align-items: center;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      }
+
+      .highlight {
+        background-color: rgba(255, 127, 17, 0.1);
+        padding: 1rem 1.25rem;
+        border-radius: 12px;
+        border-left: 4px solid var(--secondary);
+      }
+
+      .pricing-table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 12px 35px rgba(13, 27, 42, 0.08);
+      }
+
+      .pricing-table thead {
+        background-color: var(--primary);
+        color: #fff;
+      }
+
+      .pricing-table th,
+      .pricing-table td {
+        padding: 1.15rem 1.25rem;
+        text-align: left;
+      }
+
+      .pricing-table tbody tr:nth-child(even) {
+        background-color: #f0f4fb;
+      }
+
+      .pricing-table tbody tr:nth-child(odd) {
+        background-color: #fafbfe;
+      }
+
+      .pricing-table tbody tr + tr {
+        border-top: 1px solid rgba(11, 37, 69, 0.05);
+      }
+
+      .download-link {
+        margin-top: 1.5rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--secondary);
+        font-weight: 600;
+      }
+
+      .projects {
+        background-color: #fff;
+      }
+
+      .projects ul {
+        padding-left: 1.25rem;
+      }
+
+      .projects li {
+        margin-bottom: 0.5rem;
+      }
+
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.25rem;
+        margin-top: 2rem;
+      }
+
+      .gallery figure {
+        position: relative;
+        margin: 0;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 12px 24px rgba(13, 27, 42, 0.12);
+      }
+
+      .gallery img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .gallery figcaption {
+        position: absolute;
+        inset: auto 0 0;
+        padding: 0.75rem 1rem;
+        background: linear-gradient(180deg, transparent, rgba(11, 37, 69, 0.85));
+        color: #fff;
+        font-size: 0.85rem;
+      }
+
+      .contact-card {
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 18px;
+        box-shadow: 0 12px 35px rgba(13, 27, 42, 0.08);
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      }
+
+      form {
+        display: grid;
+        gap: 1rem;
+      }
+
+      label {
+        font-weight: 600;
+      }
+
+      input,
+      textarea {
+        padding: 0.85rem 1rem;
+        border-radius: 12px;
+        border: 1px solid rgba(11, 37, 69, 0.15);
+        font: inherit;
+        width: 100%;
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 140px;
+      }
+
+      .contact-info {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .contact-info p {
+        margin: 0;
+      }
+
+      footer {
+        background-color: var(--dark);
+        color: #dde4ff;
+        padding: 2.5rem 0;
+        text-align: center;
+      }
+
+      footer a {
+        color: var(--secondary);
+      }
+
+      .back-to-top {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background-color: var(--secondary);
+        color: #fff;
+        display: grid;
+        place-items: center;
+        box-shadow: 0 12px 24px rgba(255, 127, 17, 0.3);
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .back-to-top:hover,
+      .back-to-top:focus {
+        transform: translateY(-4px);
+      }
+
+      @media (max-width: 860px) {
+        nav ul {
+          position: absolute;
+          top: 100%;
+          right: 0;
+          background-color: rgba(11, 37, 69, 0.98);
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 1rem 1.5rem;
+          border-radius: 12px;
+          gap: 1rem;
+          transform-origin: top right;
+          transform: scale(0.9);
+          opacity: 0;
+          pointer-events: none;
+          transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        nav ul.open {
+          transform: scale(1);
+          opacity: 1;
+          pointer-events: auto;
+        }
+
+        .menu-toggle {
+          display: flex;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container navbar">
+        <div class="brand">V-ESA</div>
+        <nav aria-label="Navigation principale">
+          <div class="menu-toggle" aria-label="Ouvrir le menu" role="button" tabindex="0">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <ul>
+            <li><a href="#accueil">Accueil</a></li>
+            <li><a href="#apropos">À propos</a></li>
+            <li><a href="#services">Nos services</a></li>
+            <li><a href="#tarifs">Tarifs</a></li>
+            <li><a href="#projets">Projets</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#mentions">Mentions légales</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="accueil">
+        <div class="container">
+          <p class="brand" style="color: var(--secondary); letter-spacing: 0.3em;">V-ESA</p>
+          <h1>Une vocation dédiée à la réparation fiable et à l’accompagnement administratif</h1>
+          <p>
+            Nous offrons aux particuliers, entreprises, musiciens et joueurs un partenaire de confiance
+            pour réparer leurs appareils électroniques et simplifier leurs démarches administratives.
+          </p>
+          <div class="cta-group">
+            <a class="btn btn-primary" href="#services">Découvrir nos services</a>
+            <a class="btn btn-outline" href="#tarifs">Demander un devis</a>
+            <a class="btn btn-outline" href="#contact">Nous contacter</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="apropos">
+        <div class="container">
+          <h2>À propos de V-ESA</h2>
+          <p class="section-subtitle">
+            Vocation pour la Réparation Électronique et Solution Administrative : notre mission est de redonner vie
+            à vos équipements et de vous libérer des démarches complexes.
+          </p>
+          <div class="split-layout">
+            <div>
+              <h3>Notre mission</h3>
+              <p>
+                Simplifier le quotidien de nos clients en combinant expertise technique et assistance humaine. Nous mettons
+                à profit notre savoir-faire pour assurer des réparations fiables et un accompagnement administratif
+                personnalisé.
+              </p>
+              <div class="highlight">
+                <strong>Vision :</strong> devenir la référence régionale en matière de réparation électronique durable et de services
+                administratifs accessibles.
+              </div>
+            </div>
+            <div>
+              <h3>Valeurs fondatrices</h3>
+              <ul class="values-list">
+                <li><span>Innovation</span> - veille technique permanente pour diagnostiquer et réparer rapidement.</li>
+                <li><span>Fiabilité</span> - interventions garanties, confidentialité et respect des délais.</li>
+                <li><span>Engagement</span> - proximité avec nos clients et lutte contre les déchets électroniques.</li>
+              </ul>
+              <p>
+                Fondée par un technicien passionné, V-ESA est née d’une double vocation : prolonger la durée de vie des appareils
+                électroniques et soutenir les personnes face à la complexité administrative.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="services">
+        <div class="container">
+          <h2>Nos services</h2>
+          <p class="section-subtitle">
+            Deux pôles complémentaires pour répondre aux besoins des particuliers et des professionnels : assistance
+            administrative sur mesure et atelier de réparation électronique multi-marques.
+          </p>
+          <div class="cards-grid">
+            <article class="card" aria-labelledby="service-assistance">
+              <div class="icon-circle">📄</div>
+              <h3 id="service-assistance">Assistance administrative</h3>
+              <p>
+                Démarches CAF, Pôle emploi, dossiers de retraite, impôts, rédaction de courriers et création de comptes en ligne.
+                Chaque accompagnement inclut une analyse personnalisée et un suivi jusqu’à la validation du dossier.
+              </p>
+              <ul>
+                <li>Accompagnement individuel et à distance</li>
+                <li>Prise de rendez-vous en ligne ou à domicile</li>
+                <li>Tarifs transparents à la prestation</li>
+              </ul>
+            </article>
+            <article class="card" aria-labelledby="service-telesecretariat">
+              <div class="icon-circle">📠</div>
+              <h3 id="service-telesecretariat">Télésecrétariat pour entreprises</h3>
+              <p>
+                Gestion d’agendas, filtrage des appels, rédaction de comptes rendus et suivi administratif. Nous aidons les TPE/PME à
+                rester concentrées sur leur cœur de métier tout en réduisant leurs coûts internes.
+              </p>
+              <ul>
+                <li>Disponibilité flexible en heures de pointe</li>
+                <li>Compte rendu quotidien ou hebdomadaire</li>
+                <li>Confidentialité et traçabilité garanties</li>
+              </ul>
+            </article>
+            <article class="card" aria-labelledby="service-consoles">
+              <div class="icon-circle">🎮</div>
+              <h3 id="service-consoles">Réparation de consoles de jeux</h3>
+              <p>
+                Diagnostic et réparation pour PlayStation 4 &amp; 5, Nintendo Switch et Xbox Series. Remplacement de ventilateurs, ports HDMI,
+                disques durs et nettoyage complet des circuits de refroidissement.
+              </p>
+              <ul>
+                <li>Diagnostic sous 48&nbsp;heures</li>
+                <li>Composants certifiés et garantie 3 mois</li>
+                <li>Option de devis express en ligne</li>
+              </ul>
+            </article>
+            <article class="card" aria-labelledby="service-instruments">
+              <div class="icon-circle">🎹</div>
+              <h3 id="service-instruments">Réparation d’instruments électroniques</h3>
+              <p>
+                Synthétiseurs, pianos numériques, boîtes à rythmes et interfaces audio. Nettoyage, recalibrage, remplacement de touches,
+                résolution de problèmes d’alimentation ou de connectique et tests audio complets.
+              </p>
+              <ul>
+                <li>Diagnostic atelier à partir de 45&nbsp;€</li>
+                <li>Compte rendu détaillé et photos avant/après</li>
+                <li>Interventions sur devis personnalisé</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="tarifs">
+        <div class="container">
+          <h2>Tarifs</h2>
+          <p class="section-subtitle">
+            Des grilles claires pour anticiper votre budget. Les devis sont gratuits et expédiés sous 24 heures ouvrées.
+          </p>
+          <div class="split-layout">
+            <div style="overflow-x: auto;">
+              <table class="pricing-table" aria-describedby="tarifs-description">
+                <caption id="tarifs-description" style="text-align: left; padding: 1rem; font-weight: 600;">
+                  Tarifs indicatifs pour les principales prestations V-ESA.
+                </caption>
+                <thead>
+                  <tr>
+                    <th>Service</th>
+                    <th>Prestation</th>
+                    <th>À partir de</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Assistance administrative</td>
+                    <td>Dossier CAF / allocations</td>
+                    <td>39&nbsp;€</td>
+                  </tr>
+                  <tr>
+                    <td>Assistance administrative</td>
+                    <td>Déclaration d’impôts accompagnée</td>
+                    <td>59&nbsp;€</td>
+                  </tr>
+                  <tr>
+                    <td>Télésecrétariat</td>
+                    <td>Forfait 10 heures / mois</td>
+                    <td>189&nbsp;€</td>
+                  </tr>
+                  <tr>
+                    <td>Réparation console</td>
+                    <td>Remplacement port HDMI (PS5)</td>
+                    <td>129&nbsp;€</td>
+                  </tr>
+                  <tr>
+                    <td>Réparation console</td>
+                    <td>Nettoyage complet &amp; repast PS4</td>
+                    <td>79&nbsp;€</td>
+                  </tr>
+                  <tr>
+                    <td>Instrument électronique</td>
+                    <td>Diagnostic atelier</td>
+                    <td>45&nbsp;€</td>
+                  </tr>
+                  <tr>
+                    <td>Instrument électronique</td>
+                    <td>Réparation clavier/synthé</td>
+                    <td>Sur devis</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div>
+              <div class="highlight">
+                <strong>Besoin d’un devis détaillé&nbsp;?</strong> Envoyez-nous votre demande en décrivant la panne ou la mission administrative.
+                Nous répondons sous 24h ouvrées avec une proposition personnalisée.
+              </div>
+              <a class="download-link" href="assets/tarifs-v-esa.pdf" download>
+                📄 Télécharger la fiche tarifaire (PDF)
+              </a>
+              <p style="margin-top: 1.5rem;">
+                Les tarifs incluent un suivi après prestation et la garantie main d’œuvre de 90 jours sur toutes nos réparations.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="projects" id="projets">
+        <div class="container">
+          <h2>Projets et développement</h2>
+          <p class="section-subtitle">
+            Notre feuille de route combine croissance maîtrisée, proximité client et engagements environnementaux.
+          </p>
+          <div class="split-layout">
+            <div>
+              <h3>Business plan synthétique</h3>
+              <ul>
+                <li>Ouverture d’un atelier dédié aux consoles et instruments au 2e semestre.</li>
+                <li>Déploiement d’une offre de télésecrétariat premium pour TPE locales.</li>
+                <li>Création d’une académie d’auto-dépannage électronique (ateliers et tutoriels).</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Objectifs de croissance</h3>
+              <ul>
+                <li>+30&nbsp;% de capacité de prise en charge réparation en 12 mois.</li>
+                <li>Partenariats avec magasins de musique et espaces de coworking.</li>
+                <li>Certification ISO 14001 visée pour la gestion des déchets électroniques.</li>
+              </ul>
+              <div class="highlight" style="margin-top: 1rem;">
+                <strong>Engagement environnemental :</strong> revalorisation des composants, dons de matériel fonctionnel et sensibilisation au
+                recyclage auprès des clients.
+              </div>
+            </div>
+          </div>
+          <div class="gallery" aria-label="Galerie de réalisations">
+            <figure>
+              <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80" alt="Technicien réparant une console de jeux" />
+              <figcaption>Atelier consoles — diagnostic et micro-soudure.</figcaption>
+            </figure>
+            <figure>
+              <img src="https://images.unsplash.com/photo-1527430253228-e93688616381?auto=format&fit=crop&w=800&q=80" alt="Synthétiseur en maintenance" />
+              <figcaption>Entretien complet d’un synthétiseur analogique.</figcaption>
+            </figure>
+            <figure>
+              <img src="https://images.unsplash.com/photo-1523475472560-d2df97ec485c?auto=format&fit=crop&w=800&q=80" alt="Consultante administrative accompagnant un client" />
+              <figcaption>Accompagnement administratif personnalisé.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="container">
+          <h2>Contact</h2>
+          <p class="section-subtitle">
+            Parlons de votre projet : une réponse rapide, humaine et professionnelle vous est garantie.
+          </p>
+          <div class="contact-card">
+            <form action="mailto:contact@v-esa.fr" method="post" enctype="text/plain">
+              <div>
+                <label for="name">Nom *</label>
+                <input id="name" name="Nom" type="text" required placeholder="Votre nom" />
+              </div>
+              <div>
+                <label for="email">Email *</label>
+                <input id="email" name="Email" type="email" required placeholder="votre@email.fr" />
+              </div>
+              <div>
+                <label for="phone">Téléphone</label>
+                <input id="phone" name="Téléphone" type="tel" placeholder="06 00 00 00 00" />
+              </div>
+              <div>
+                <label for="message">Message *</label>
+                <textarea id="message" name="Message" required placeholder="Décrivez votre besoin"></textarea>
+              </div>
+              <button class="btn btn-primary" type="submit">Envoyer ma demande</button>
+            </form>
+            <div class="contact-info">
+              <div>
+                <h3>Coordonnées</h3>
+                <p>Email : <a href="mailto:contact@v-esa.fr">contact@v-esa.fr</a></p>
+                <p>Téléphone : <a href="tel:+33600000000">06 00 00 00 00</a></p>
+                <p>Adresse : 12 rue des Ateliers, 13000 Marseille</p>
+              </div>
+              <div>
+                <h3>Horaires</h3>
+                <p>Lundi - Vendredi : 9h00 – 18h30</p>
+                <p>Samedi : sur rendez-vous</p>
+              </div>
+              <div>
+                <h3>Réseaux sociaux</h3>
+                <p>
+                  <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a> ·
+                  <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="mentions" style="background-color: #fff;">
+        <div class="container">
+          <h2>Mentions légales &amp; confidentialité</h2>
+          <div class="split-layout">
+            <div>
+              <h3>Éditeur du site</h3>
+              <p>
+                V-ESA — Vocation pour la Réparation Électronique et Solution Administrative<br />
+                SIRET : 123 456 789 00010 · contact@v-esa.fr
+              </p>
+              <p>
+                Directeur de la publication : V-ESA<br />
+                Hébergement : OVH — 2 rue Kellermann, 59100 Roubaix
+              </p>
+            </div>
+            <div>
+              <h3>Politique de confidentialité</h3>
+              <p>
+                Les données transmises via le formulaire de contact (nom, email, téléphone, message) sont utilisées pour répondre à votre
+                demande. Elles sont conservées 12 mois maximum et ne sont ni revendues ni partagées avec des tiers.
+              </p>
+              <p>
+                Vous disposez d’un droit d’accès, de rectification et de suppression de vos données (RGPD). Contactez-nous à
+                <a href="mailto:contact@v-esa.fr">contact@v-esa.fr</a>. Le site utilise des cookies strictement nécessaires au fonctionnement et à la mesure
+                anonyme d’audience.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <a class="back-to-top" href="#accueil" aria-label="Retour en haut">↑</a>
+
+    <footer>
+      <div class="container">
+        <p>© <span id="year"></span> V-ESA — Réparation électronique &amp; assistance administrative. Tous droits réservés.</p>
+        <p>
+          Site sécurisé par certificat SSL. Consultez notre <a href="#mentions">politique de confidentialité</a> et notre
+          <a href="sitemap.xml">sitemap</a> (bientôt disponible).
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      const toggle = document.querySelector('.menu-toggle');
+      const menu = document.querySelector('nav ul');
+      const yearSpan = document.getElementById('year');
+      if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+      }
+      const toggleMenu = () => {
+        menu.classList.toggle('open');
+      };
+      toggle?.addEventListener('click', toggleMenu);
+      toggle?.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggleMenu();
+        }
+      });
+    </script>
+  </body>
+</html>
