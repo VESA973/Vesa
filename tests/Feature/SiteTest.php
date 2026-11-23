@@ -65,6 +65,14 @@ class SiteTest extends TestCase
             ->assertSee('<meta property="og:url" content="'.url('/solutions').'">', false);
     }
 
+    public function test_old_site_addresses_redirect_permanently(): void
+    {
+        $this->get('/reparation-consoles')->assertStatus(301)->assertRedirect('/reparation/consoles');
+        $this->get('/reparation-instruments')->assertStatus(301)->assertRedirect('/reparation/instruments');
+        $this->get('/rendez-vous')->assertStatus(301)->assertRedirect('/contact');
+        $this->get('/boutique')->assertStatus(301)->assertRedirect('/');
+    }
+
     public function test_contact_page_preselects_service_from_query(): void
     {
         $this->get('/contact?service=reparation')

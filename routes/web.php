@@ -20,3 +20,16 @@ Route::view('/cookies', 'pages.cookies')->name('cookies');
 Route::post('/contact', [ContactRequestController::class, 'store'])
     ->middleware('throttle:5,1')
     ->name('contact.store');
+
+// Addresses of the previous v-esa.fr site, permanently redirected so old links and search results keep working.
+Route::permanentRedirect('/reparation-consoles', '/reparation/consoles');
+Route::permanentRedirect('/reparation-instruments', '/reparation/instruments');
+Route::permanentRedirect('/telesecretariat', '/solutions');
+Route::permanentRedirect('/rendez-vous', '/contact');
+Route::permanentRedirect('/cgv', '/mentions-legales');
+Route::permanentRedirect('/confidentialite', '/mentions-legales');
+Route::permanentRedirect('/retours', '/mentions-legales');
+Route::permanentRedirect('/services', '/');
+Route::permanentRedirect('/a-propos', '/');
+Route::permanentRedirect('/assistance-administrative', '/');
+Route::permanentRedirect('/boutique', '/');
