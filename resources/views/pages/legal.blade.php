@@ -28,7 +28,7 @@
             <x-legal-section title="Données personnelles">
                 <p><strong>Ce que nous collectons.</strong> Quand vous utilisez le formulaire de contact : votre nom, votre e-mail, et si vous les indiquez, votre téléphone, votre entreprise et votre message.</p>
                 <p><strong>Pourquoi.</strong> Uniquement pour répondre à votre demande et, le cas échéant, établir un devis. Base légale : les mesures précontractuelles prises à votre demande.</p>
-                <p><strong>Qui y a accès.</strong> V-ESA seulement. Vos données ne sont ni vendues ni transmises à des tiers.</p>
+                <p><strong>Qui y a accès.</strong> V-ESA seulement. Vos données ne sont ni vendues ni transmises à des tiers. Pour bloquer les robots, le formulaire peut utiliser Google reCAPTCHA, qui traite des informations techniques (adresse IP, interactions avec la page) selon ses propres <a href="https://policies.google.com/privacy" rel="noopener" target="_blank">règles de confidentialité</a>.</p>
                 <p><strong>Combien de temps.</strong> 3 ans après notre dernier échange, puis elles sont supprimées.</p>
                 <p><strong>Vos droits.</strong> Conformément au RGPD et à la loi Informatique et Libertés, vous pouvez accéder à vos données, les rectifier, les supprimer, en limiter l’usage ou vous y opposer en écrivant à <a href="mailto:contact@v-esa.fr">contact@v-esa.fr</a>. Vous pouvez aussi adresser une réclamation à la <a href="https://www.cnil.fr" rel="noopener" target="_blank">CNIL</a>.</p>
             </x-legal-section>

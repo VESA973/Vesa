@@ -1,7 +1,9 @@
 @php
     use App\Models\ContactRequest;
+    use App\Models\Setting;
 
     $selectedService = old('service', request('service'));
+    $recaptchaSiteKey = Setting::recaptchaEnabled() ? Setting::recaptcha()['site_key'] : null;
     $inputClasses = 'mt-2 w-full border-0 border-b border-neutral-200 bg-transparent px-0 py-3 text-lg focus:border-ink focus:ring-0 focus:outline-none';
 @endphp
 
@@ -51,6 +53,16 @@
                 <textarea id="message" name="message" rows="4" class="{{ $inputClasses }}" required>{{ old('message') }}</textarea>
                 @error('message') <p class="mt-2 text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
+
+            @if ($recaptchaSiteKey)
+                {{-- Google reCAPTCHA v2, loaded on this page only --}}
+                <div>
+                    <div class="g-recaptcha" data-sitekey="{{ $recaptchaSiteKey }}"></div>
+                    @error('g-recaptcha-response') <p class="mt-2 text-sm text-red-600">{{ $message }}</p> @enderror
+                    <p class="mt-2 text-xs text-neutral-400">Protégé par reCAPTCHA : les <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" class="underline">règles de confidentialité</a> et les <a href="https://policies.google.com/terms" target="_blank" rel="noopener" class="underline">conditions d’utilisation</a> de Google s’appliquent.</p>
+                </div>
+                <script src="https://www.google.com/recaptcha/api.js?hl=fr" async defer></script>
+            @endif
 
             <button type="submit" class="rounded-full bg-ink px-8 py-4 font-medium text-white transition hover:bg-ink-soft">Envoyer la demande</button>
         </form>
