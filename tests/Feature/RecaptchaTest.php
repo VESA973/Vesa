@@ -24,6 +24,7 @@ class RecaptchaTest extends TestCase
             'service' => 'reparation',
             'name' => 'Marie Martin',
             'email' => 'marie@example.com',
+            'phone' => '0694 12 34 56',
             'message' => 'Mon piano ne s’allume plus.',
             ...$overrides,
         ];
