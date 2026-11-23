@@ -86,6 +86,7 @@ class SiteTest extends TestCase
             'service' => 'solutions',
             'name' => 'Jean Dupont',
             'email' => 'jean@example.com',
+            'phone' => '0694 12 34 56',
             'message' => 'Je voudrais un site.',
         ])->assertRedirect('/contact')->assertSessionHas('status');
 
@@ -104,6 +105,7 @@ class SiteTest extends TestCase
             'service' => 'reparation',
             'name' => 'Marie Martin',
             'email' => 'marie@example.com',
+            'phone' => '+594 694 12 34 56',
             'message' => 'Mon piano Yamaha ne s’allume plus.',
         ])->assertRedirect('/contact');
 
@@ -131,10 +133,20 @@ class SiteTest extends TestCase
             'service' => 'solutions',
             'name' => 'Jean Dupont',
             'email' => 'jean@example.com',
+            'phone' => '0694 12 34 56',
             'message' => 'Je voudrais un site.',
         ])->assertRedirect('/contact')->assertSessionHas('status');
 
         $this->assertDatabaseHas('contact_requests', ['email' => 'jean@example.com']);
+    }
+
+    public function test_phone_number_is_required_and_checked(): void
+    {
+        $form = ['service' => 'solutions', 'name' => 'Jean Dupont', 'email' => 'jean@example.com', 'message' => 'Bonjour'];
+
+        $this->post('/contact', $form)->assertSessionHasErrors(['phone' => 'Le champ téléphone est obligatoire.']);
+        $this->post('/contact', [...$form, 'phone' => 'appelez-moi'])->assertSessionHasErrors(['phone' => 'Le format du champ téléphone n’est pas valide.']);
+        $this->post('/contact', [...$form, 'phone' => '06 94 12 34 56'])->assertSessionHasNoErrors();
     }
 
     public function test_invalid_contact_request_is_rejected(): void

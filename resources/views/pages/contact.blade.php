@@ -37,7 +37,7 @@
                 @foreach ([
                     ['name', 'Nom', 'text', true, 'name'],
                     ['email', 'E-mail', 'email', true, 'email'],
-                    ['phone', 'Téléphone', 'tel', false, 'tel'],
+                    ['phone', 'Téléphone', 'tel', true, 'tel'],
                     ['company', 'Entreprise', 'text', false, 'organization'],
                 ] as [$field, $label, $type, $isRequired, $autocomplete])
                     <div>
