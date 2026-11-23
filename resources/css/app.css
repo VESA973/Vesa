@@ -1,0 +1,297 @@
+@import 'tailwindcss';
+@import 'lenis/dist/lenis.css';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: 'Exo 2', ui-sans-serif, system-ui, sans-serif;
+    /* Futuristic display face; its square letters echo the logo's "VES@". */
+    --font-display: 'Orbitron', 'Exo 2', ui-sans-serif, system-ui, sans-serif;
+    /* Keywords use the futuristic display face too. */
+    --font-script: 'Orbitron', 'Exo 2', ui-sans-serif, sans-serif;
+    --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    /* Dark green of the logo's leaf, used for buttons and active states. */
+    --color-ink: #173a34;
+    --color-ink-soft: #24564c;
+}
+
+/* Headings use the futuristic display face (wide letters: no negative tracking). */
+@layer base {
+    h1,
+    h2,
+    h3 {
+        font-family: var(--font-display);
+        letter-spacing: 0.01em;
+        overflow-wrap: anywhere;
+    }
+}
+
+/* One gradient per activity, all taken from the logo (green leaf → blue circuit). */
+.accent-solutions {
+    --accent: linear-gradient(120deg, #3fbf6a, #2d6fd2);
+}
+.accent-reparation {
+    --accent: linear-gradient(120deg, #8fd94e, #2a9d8f);
+}
+.accent-conseil {
+    --accent: linear-gradient(120deg, #2a9d8f, #2d6fd2);
+}
+
+.accent-text {
+    background: var(--accent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.accent-bg {
+    background: var(--accent);
+}
+
+/* Background: plain white under a canvas of falling code. */
+.site-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    overflow: hidden;
+    background: #fff;
+    pointer-events: none;
+}
+
+/* Faint 12-column grid lines, like a technical drawing. */
+.site-backdrop::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(to right, rgb(23 58 52 / 0.06) 1px, transparent 1px);
+    background-size: calc(100% / 12) 100%;
+}
+
+/* Fine grain so the gradients feel like a material, not a flat screen. */
+.site-backdrop::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Industrial image frames: cut corners plus viewfinder marks on the two uncut corners. */
+.notch {
+    --notch: clamp(1.25rem, 4vw, 3.5rem);
+    clip-path: polygon(var(--notch) 0, 100% 0, 100% calc(100% - var(--notch)), calc(100% - var(--notch)) 100%, 0 100%, 0 var(--notch));
+}
+
+.notch-flip {
+    --notch: clamp(1.25rem, 4vw, 3.5rem);
+    clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% var(--notch), 100% 100%, var(--notch) 100%, 0 calc(100% - var(--notch)));
+}
+
+.corner-mark {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-color: var(--color-ink);
+    pointer-events: none;
+}
+
+/* Terminal typing (data-type): hidden until typed; shown anyway after 3s if the script never runs. */
+.js [data-type] {
+    visibility: hidden;
+    animation: type-fallback 0s 3s forwards;
+}
+
+@keyframes type-fallback {
+    to {
+        visibility: visible;
+    }
+}
+
+/* Block cursor that follows the text being typed; inherits gradient text too. */
+.is-typing::after {
+    content: '█';
+    margin-left: 0.08em;
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    animation: cursor-blink 0.9s steps(1) infinite;
+}
+
+@keyframes cursor-blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Hero: chips gently float, HUD rings turn slowly. */
+.float-slow {
+    animation: float-slow 6s ease-in-out infinite;
+}
+
+@keyframes float-slow {
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.hud-spin,
+.hud-spin-reverse {
+    transform-origin: 200px 200px;
+    animation: hud-spin 40s linear infinite;
+}
+
+.hud-spin-reverse {
+    animation-duration: 60s;
+    animation-direction: reverse;
+}
+
+@keyframes hud-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Repair visual: scan line sweeping down and up over the controller. */
+.scan-line {
+    animation: scan 3.2s ease-in-out infinite alternate;
+}
+
+@keyframes scan {
+    to {
+        top: 68%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .float-slow,
+    .hud-spin,
+    .hud-spin-reverse,
+    .scan-line {
+        animation: none;
+    }
+}
+
+/* Arrival loader: covers the page until resources/js/loader.js wipes it away. Hidden without JS,
+   on later pages of the same visit (.no-loader), and in any case after 5 s if the script never runs. */
+.site-loader {
+    display: none;
+}
+
+.js .site-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: grid;
+    place-items: center;
+    background:
+        linear-gradient(to right, rgb(23 58 52 / 0.06) 1px, transparent 1px) 0 0 / calc(100% / 12) 100%,
+        #fff;
+    clip-path: inset(0 0 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.7, 0, 0.2, 1);
+    animation: loader-fallback 0s 5s forwards;
+}
+
+.js.no-loader .site-loader {
+    display: none;
+}
+
+.site-loader.is-done {
+    clip-path: inset(0 0 100% 0);
+}
+
+.loader-ring {
+    animation: hud-spin 6s linear infinite;
+}
+
+.loader-logo {
+    animation: loader-pulse 1.6s ease-in-out infinite;
+}
+
+.loader-caret {
+    animation: cursor-blink 0.9s steps(1) infinite;
+}
+
+@keyframes loader-pulse {
+    50% {
+        transform: scale(1.08);
+        filter: drop-shadow(0 0 12px rgb(63 191 106 / 0.6));
+    }
+}
+
+@keyframes loader-fallback {
+    to {
+        visibility: hidden;
+    }
+}
+
+/* Photos take on the background's colours so they sit in the same atmosphere. */
+.photo-tint {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(135deg, rgb(63 191 106 / 0.4), rgb(42 157 143 / 0.35) 55%, rgb(45 111 210 / 0.35));
+    mix-blend-mode: soft-light;
+}
+
+.photo-graded {
+    filter: saturate(0.88) contrast(1.03);
+}
+
+@keyframes marquee {
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/* Native cross-fade between pages (Chrome, Edge, Safari 18.2+); other browsers just load normally. */
+@view-transition {
+    navigation: auto;
+}
+
+.site-header {
+    view-transition-name: site-header;
+}
+
+/* Page change: the old page lifts away and blurs, the new one is revealed top to bottom like a scan.
+   The header and the background stay put; the menu underline glides to the new section. */
+.nav-indicator {
+    view-transition-name: nav-indicator;
+}
+
+::view-transition-old(root) {
+    animation: page-out 0.3s ease-in both;
+}
+
+::view-transition-new(root) {
+    animation: page-in 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+::view-transition-group(nav-indicator) {
+    animation-duration: 0.45s;
+    animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes page-out {
+    to {
+        opacity: 0;
+        transform: translateY(-12px);
+        filter: blur(6px);
+    }
+}
+
+@keyframes page-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+        clip-path: inset(0 0 100% 0);
+    }
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    @view-transition {
+        navigation: none;
+    }
+}
