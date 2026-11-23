@@ -15,6 +15,8 @@ class Setting extends Model
 {
     public const MAIL_CACHE_KEY = 'settings.mail';
 
+    public const CAPTCHA_CACHE_KEY = 'settings.captcha';
+
     /**
      * Mail settings editable in the admin (the password is handled separately).
      *
@@ -52,6 +54,53 @@ class Setting extends Model
         }
 
         Cache::forget(self::MAIL_CACHE_KEY);
+    }
+
+    /**
+     * reCAPTCHA keys: admin values first, then .env. Both are needed for the captcha to be active.
+     *
+     * @return array{site_key: ?string, secret_key: ?string}
+     */
+    public static function recaptcha(): array
+    {
+        $stored = Cache::rememberForever(self::CAPTCHA_CACHE_KEY, fn (): array => self::query()
+            ->whereIn('key', ['captcha.site_key', 'captcha.secret_key'])
+            ->pluck('value', 'key')
+            ->all());
+
+        $siteKey = $stored['captcha.site_key'] ?? null;
+        $secretKey = filled($stored['captcha.secret_key'] ?? null) ? Crypt::decryptString($stored['captcha.secret_key']) : null;
+
+        return [
+            'site_key' => $siteKey ?: config('services.recaptcha.site_key'),
+            'secret_key' => $secretKey ?: config('services.recaptcha.secret_key'),
+        ];
+    }
+
+    public static function recaptchaEnabled(): bool
+    {
+        $keys = self::recaptcha();
+
+        return filled($keys['site_key']) && filled($keys['secret_key']);
+    }
+
+    /**
+     * Save reCAPTCHA keys; an empty secret keeps the stored one, an empty site key turns the captcha off.
+     *
+     * @param  array<string, mixed>  $data
+     */
+    public static function saveRecaptcha(array $data): void
+    {
+        if (blank($data['site_key'] ?? null)) {
+            self::query()->whereIn('key', ['captcha.site_key', 'captcha.secret_key'])->delete();
+        } else {
+            self::query()->updateOrCreate(['key' => 'captcha.site_key'], ['value' => trim($data['site_key'])]);
+            if (filled($data['secret_key'] ?? null)) {
+                self::query()->updateOrCreate(['key' => 'captcha.secret_key'], ['value' => Crypt::encryptString(trim($data['secret_key']))]);
+            }
+        }
+
+        Cache::forget(self::CAPTCHA_CACHE_KEY);
     }
 
     public static function hasMailPassword(): bool

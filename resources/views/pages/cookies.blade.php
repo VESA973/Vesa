@@ -4,6 +4,10 @@
         ['XSRF-TOKEN', 'Protège les formulaires contre les envois frauduleux.', 'Nécessaire', config('session.lifetime').' minutes'],
         ['vesa-cookie-consent', 'Mémorise votre choix sur le bandeau cookies (stockage local du navigateur).', 'Nécessaire', '13 mois'],
     ];
+
+    if (App\Models\Setting::recaptchaEnabled()) {
+        $cookies[] = ['_GRECAPTCHA (Google)', 'Protège le formulaire de contact contre les robots (Google reCAPTCHA). Déposé uniquement sur la page Contact.', 'Sécurité', '6 mois'];
+    }
 @endphp
 
 <x-layouts.site title="Politique cookies" description="Les cookies utilisés sur le site V-ESA et comment gérer vos choix.">
@@ -35,7 +39,10 @@
                         </tbody>
                     </table>
                 </div>
-                <p>Ces éléments sont indispensables au fonctionnement du site : ils ne demandent pas votre consentement (article 82 de la loi Informatique et Libertés).</p>
+                <p>Ces éléments sont indispensables au fonctionnement et à la sécurité du site.</p>
+                @if (App\Models\Setting::recaptchaEnabled())
+                    <p>Sur la page Contact, le service Google reCAPTCHA vérifie que le formulaire est envoyé par une personne et non par un robot. Google peut à cette occasion déposer des cookies et traiter des informations techniques (adresse IP, interactions avec la page), selon ses <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">règles de confidentialité</a>. Si vous ne souhaitez pas utiliser ce service, écrivez-nous directement à <a href="mailto:contact@v-esa.fr">contact@v-esa.fr</a>.</p>
+                @endif
             </x-legal-section>
 
             <x-legal-section title="Mesure d’audience">

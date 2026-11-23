@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Mail\ContactRequestReceived;
 use App\Models\ContactRequest;
+use App\Models\Setting;
+use App\Rules\Recaptcha;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -17,14 +19,21 @@ class ContactRequestController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
+        $rules = [
             'service' => ['required', Rule::in(array_keys(ContactRequest::SERVICES))],
             'name' => ['required', 'string', 'max:120'],
             'email' => ['required', 'email', 'max:180'],
             'phone' => ['nullable', 'string', 'max:30'],
             'company' => ['nullable', 'string', 'max:120'],
             'message' => ['required', 'string', 'max:5000'],
-        ]);
+        ];
+
+        // "Je ne suis pas un robot" is only checked once both reCAPTCHA keys are set in the admin.
+        if (Setting::recaptchaEnabled()) {
+            $rules['g-recaptcha-response'] = ['required', 'string', new Recaptcha(Setting::recaptcha()['secret_key'], $request->ip())];
+        }
+
+        $validated = collect($request->validate($rules))->except('g-recaptcha-response')->all();
 
         $contactRequest = ContactRequest::create($validated);
 
