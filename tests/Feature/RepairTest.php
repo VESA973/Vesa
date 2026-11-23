@@ -53,6 +53,7 @@ class RepairTest extends TestCase
             ->assertOk()
             ->assertSee('href="'.route('home').'" class="relative', false)
             ->assertSee('Accueil')
+            ->assertSee('data-mobile-menu', false)
             ->assertSee(route('reparation.family', 'instruments'), false)
             ->assertSee(route('reparation.family', 'consoles'), false);
     }
