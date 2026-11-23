@@ -91,7 +91,7 @@
 
             <ul class="flex items-center gap-6 text-sm md:gap-10">
                 @foreach ($links as $route => $label)
-                    <li @class(['hidden sm:block' => $route !== 'contact', 'group relative' => $route === 'reparation'])>
+                    <li @class(['hidden sm:block', 'group relative' => $route === 'reparation'])>
                         @if ($route === 'contact')
                             <a href="{{ route($route) }}" class="rounded-full bg-ink px-5 py-2.5 font-medium text-white transition hover:bg-ink-soft">Écrivez-nous</a>
                         @else
@@ -121,6 +121,42 @@
                         @endif
                     </li>
                 @endforeach
+
+                {{-- Phone menu: native <details>, so it works without JavaScript; the panel covers the screen under the header --}}
+                <li class="sm:hidden">
+                    <details data-mobile-menu class="group/menu">
+                        <summary class="grid size-11 cursor-pointer list-none place-items-center rounded-full ring-1 ring-neutral-900/15 [&::-webkit-details-marker]:hidden" aria-label="Menu">
+                            <span aria-hidden="true" class="relative block h-3 w-5">
+                                <span class="absolute inset-x-0 top-0 h-0.5 rounded-full bg-ink transition duration-300 group-open/menu:top-1.5 group-open/menu:rotate-45"></span>
+                                <span class="absolute inset-x-0 bottom-0 h-0.5 rounded-full bg-ink transition duration-300 group-open/menu:bottom-1 group-open/menu:-rotate-45"></span>
+                            </span>
+                        </summary>
+                        <div class="mobile-menu absolute inset-x-0 top-full h-[calc(100svh-5rem)] overflow-y-auto bg-white/95 px-6 pt-6 pb-12 backdrop-blur-xl">
+                            <p class="font-mono text-[0.65rem] tracking-[0.18em] text-neutral-400 uppercase">&gt; Navigation</p>
+                            <ul class="mt-6 divide-y divide-neutral-900/10 border-y border-neutral-900/10">
+                                @foreach ($links as $route => $label)
+                                    <li>
+                                        <a href="{{ route($route) }}" @class(['flex items-baseline gap-4 py-4 font-display text-2xl font-bold', 'text-ink' => $isActive($route), 'text-neutral-900' => ! $isActive($route)]) @if ($isActive($route)) aria-current="page" @endif>
+                                            <span class="font-mono text-xs font-normal text-neutral-400">0{{ $loop->iteration }}</span>{{ $label }}
+                                        </a>
+                                        @if ($route === 'reparation')
+                                            <ul class="-mt-1 mb-4 space-y-1 pl-9">
+                                                @foreach ($repairFamilies as $family => $familyLabel)
+                                                    <li><a href="{{ route('reparation.family', $family) }}" class="flex items-center gap-2 py-1.5 text-neutral-600"><span class="accent-reparation accent-text font-mono">›</span>{{ $familyLabel }}</a></li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+                                    </li>
+                                @endforeach
+                            </ul>
+                            <a href="{{ route('contact') }}" class="mt-8 block rounded-full bg-ink px-6 py-4 text-center font-medium text-white">Parlez-nous de votre projet</a>
+                            <p class="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-xs text-neutral-400">
+                                <a href="{{ route('legal') }}">Mentions légales</a>
+                                <a href="{{ route('cookies') }}">Politique cookies</a>
+                            </p>
+                        </div>
+                    </details>
+                </li>
             </ul>
         </nav>
     </header>
